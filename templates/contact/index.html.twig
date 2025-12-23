@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Me Contacter - Portfolio{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .contact-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .contact-info-item {
+            background: linear-gradient(160deg, rgba(19, 38, 66, 0.9), rgba(15, 29, 50, 0.95));
+            border: 1px solid rgba(0, 184, 212, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .contact-info-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 184, 212, 0.15);
+            border-color: rgba(0, 184, 212, 0.35);
+        }
+
+        .contact-info-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info-item h6 {
+            color: #00b8d4;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info-item p {
+            color: #a5c8e1;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .btn-email {
+            display: inline-block;
+            background: linear-gradient(135deg, #00b8d4, #00d4e8);
+            color: #0a1423;
+            border: none;
+            font-weight: 700;
+            padding: 18px 42px;
+            border-radius: 12px;
+            transition: all 280ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 12px 32px rgba(0, 184, 212, 0.35);
+            letter-spacing: 0.5px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-email:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 44px rgba(0, 184, 212, 0.5);
+            color: #0a1423;
+        }
+
+        .btn-email:active {
+            transform: translateY(-2px);
+        }
+
+        .email-cta {
+            margin-top: 3rem;
+            padding: 3rem 2rem;
+            background: linear-gradient(160deg, rgba(19, 38, 66, 0.6), rgba(15, 29, 50, 0.7));
+            border: 1px solid rgba(0, 184, 212, 0.2);
+            border-radius: 20px;
+        }
+
+        .email-cta h3 {
+            color: #00d4e8;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .email-cta p {
+            color: #a5c8e1;
+            margin-bottom: 2rem;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<section class="py-5" data-reveal="up">
+    <div class="container">
+        <div class="contact-wrapper">
+            <h1 class="hero-title mb-2">Me Contacter</h1>
+            <p class="lead text-muted mb-5">
+                Une question ou une opportunité ? Contactez-moi directement par email.
+            </p>
+
+            <!-- Contact Info Cards -->
+            <div class="contact-info">
+                <div class="contact-info-item" data-reveal="zoom">
+                    <div class="icon">📧</div>
+                    <h6>Email</h6>
+                    <p>enzo.ravignon@gmail.com</p>
+                </div>
+                <div class="contact-info-item" data-reveal="zoom">
+                    <div class="icon">📱</div>
+                    <h6>Téléphone</h6>
+                    <p>+33 6 09 37 08 41</p>
+                </div>
+            </div>
+
+            <!-- Email CTA -->
+            <div class="email-cta" data-reveal="up">
+                <h3>✉️ Envoyez-moi un message</h3>
+                <p>Cliquez sur le bouton ci-dessous pour m'envoyer un email via Gmail</p>
+                <a href="mailto:enzo.ravignon@gmail.com" class="btn-email">
+                    📬 Envoyer un email
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

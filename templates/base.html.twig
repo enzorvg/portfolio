@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}Portfolio{% endblock %}</title>
+
+    <!-- Bootstrap CSS via CDN -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Styles additionnels -->
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Animated background decorations -->
+    <div class="page-decoration orb-1"></div>
+    <div class="page-decoration orb-2"></div>
+    <div class="page-decoration orb-3"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+
+            <a class="navbar-brand" href="{{ path('app_home') }}">
+                Portfolio
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_home') }}">
+                            Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('projet_index') }}">
+                            Mes Projets
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('contact') }}">
+                            Me Contacter
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="flex-fill">
+        <div class="container py-4">
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-auto border-top" style="border-top-color: rgba(0, 184, 212, 0.15) !important;">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                
+                <!-- Links Section -->
+                <div class="col-md-3">
+                    <h6 style="color: #00b8d4; font-weight: 700; margin-bottom: 1rem;">Navigation</h6>
+                    <ul class="list-unstyled" style="font-size: 0.95rem;">
+                        <li class="mb-2"><a href="{{ path('app_home') }}" class="text-decoration-none" style="color: #a5c8e1;">Accueil</a></li>
+                        <li class="mb-2"><a href="{{ path('projet_index') }}" class="text-decoration-none" style="color: #a5c8e1;">Projets</a></li>
+                        <li class="mb-2"><a href="{{ path('contact') }}" class="text-decoration-none" style="color: #a5c8e1;">Me Contacter</a></li>
+                    </ul>
+                </div>
+
+                <!-- Projects Section -->
+                <div class="col-md-3">
+                    <h6 style="color: #00b8d4; font-weight: 700; margin-bottom: 1rem;">Projets</h6>
+                    <ul class="list-unstyled" style="font-size: 0.95rem;">
+                        <li class="mb-2"><a href="{{ path('projet_index') }}" class="text-decoration-none" style="color: #a5c8e1;">Tous les projets</a></li>
+                        <li class="mb-2"><a href="{{ path('app_home') }}#skills" class="text-decoration-none" style="color: #a5c8e1;">Compétences</a></li>
+                        <li class="mb-2"><a href="{{ path('app_home') }}#experience" class="text-decoration-none" style="color: #a5c8e1;">Expérience</a></li>
+                    </ul>
+                </div>
+
+                <!-- About Section -->
+                <div class="col-md-3">
+                    <h6 style="color: #00b8d4; font-weight: 700; margin-bottom: 1rem;">À propos</h6>
+                    <ul class="list-unstyled" style="font-size: 0.95rem;">
+                        <li class="mb-2"><a href="#" class="text-decoration-none" style="color: #a5c8e1;">LinkedIn</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none" style="color: #a5c8e1;">GitHub</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="col-md-3">
+                    <h6 style="color: #00b8d4; font-weight: 700; margin-bottom: 1rem;">Contact</h6>
+                    <ul class="list-unstyled" style="font-size: 0.95rem;">
+                        <li class="mb-2"><span style="color: #a5c8e1;">Email</span></li>
+                        <li class="mb-2"><span style="color: #a5c8e1;">Téléphone</span></li>
+                        <li class="mb-2"><a href="{{ path('contact') }}" class="btn btn-cv" style="font-size: 0.85rem; padding: 6px 12px; display: inline-block;">Formulaire</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <hr style="border-color: rgba(0, 184, 212, 0.1);">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 text-start">
+                    <small style="color: #8896a8;">
+                        © {{ "now"|date("Y") }} Ravignon Enzo. Tous droits réservés.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <!-- Scripts additionnels -->
+    {% block javascripts %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const elements = Array.from(document.querySelectorAll('[data-reveal]'));
+                if (!('IntersectionObserver' in window)) {
+                    elements.forEach(el => el.classList.add('reveal-visible'));
+                    return;
+                }
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('reveal-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.25 });
+                elements.forEach(el => {
+                    el.classList.add('reveal');
+                    observer.observe(el);
+                });
+            });
+        </script>
+    {% endblock %}
+
+</body>
+</html>

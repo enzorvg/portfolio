@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ projet.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Constrain carousel area and clip overflow */
+        .project-carousel-wrap {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        #projectCarousel,
+        #projectCarousel .carousel-inner,
+        #projectCarousel .carousel-item {
+            height: 380px;
+        }
+        #projectCarousel .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ensures image fills without distortion */
+            display: block;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+
+    <a href="{{ path('projet_index') }}" class="btn btn-secondary mb-3">← Retour aux projets</a>
+
+    <h1 class="fw-bold mb-4">{{ projet.name }}</h1>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if projet.images is not empty %}
+                        <div class="project-carousel-wrap">
+                        <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
+                            {% if projet.images|length > 1 %}
+                                <div class="carousel-indicators">
+                                    {% for img in projet.images %}
+                                        <button type="button"
+                                                data-bs-target="#projectCarousel"
+                                                data-bs-slide-to="{{ loop.index0 }}"
+                                                class="{% if loop.first %}active{% endif %}"
+                                                aria-current="{% if loop.first %}true{% endif %}"
+                                                aria-label="Slide {{ loop.index }}">
+                                        </button>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="carousel-inner">
+                                {% for img in projet.images %}
+                                    {% set ext = img.image|split('.')|last|lower %}
+                                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                        {% if ext in ['mp4','webm','ogg'] %}
+                                            <video class="d-block w-100" style="height:100%; object-fit: cover;" controls>
+                                                <source src="{{ asset('img/' ~ img.image) }}" type="video/{{ ext == 'ogv' ? 'ogg' : ext }}">
+                                                Votre navigateur ne supporte pas la vidéo.
+                                            </video>
+                                        {% else %}
+                                            <img src="{{ asset('img/' ~ img.image) }}" class="d-block"
+                                                 alt="{{ img.name }}">
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            {% if projet.images|length > 1 %}
+                                <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Précédent</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Suivant</span>
+                                </button>
+                            {% endif %}
+                        </div>
+                        </div>
+                    {% else %}
+                        <div class="project-carousel-wrap">
+                            <img src="{{ asset('images/default.png') }}" class="d-block"
+                                 alt="Image par défaut">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4 class="mb-3">Description</h4>
+                    <p class="fs-5 mb-0">{{ projet.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h4 class="mb-3">Langages utilisés</h4>
+                    {% if projet.language is not empty %}
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for lang in projet.language %}
+                                <span class="badge bg-secondary">{{ lang.name }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted mb-0">Aucun langage renseigné.</p>
+                    {% endif %}
+
+                    {% if projet.lienGithub is not null and projet.lienGithub is not empty %}
+                        <hr class="my-4">
+                        <h5 class="mb-2">Dépôt GitHub</h5>
+                        <a href="{{ projet.lienGithub }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-light">
+                            <i class="bi bi-github"></i> Voir sur GitHub
+                        </a>
+                    {% endif %}
+
+                    <hr class="my-4">
+                    <p class="text-muted mb-0">Créé le : {{ projet.createdAt|date('d/m/Y') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modalEl = document.getElementById('imageModal');
+            if (!modalEl) return;
+            const modalImg = document.getElementById('modalImage');
+            const bsModal = new bootstrap.Modal(modalEl);
+
+            function enableClickZoom(selector) {
+                document.querySelectorAll(selector).forEach(function (img) {
+                    img.style.cursor = 'zoom-in';
+                    img.addEventListener('click', function () {
+                        const src = img.getAttribute('src');
+                        const alt = img.getAttribute('alt') || '';
+                        modalImg.src = src;
+                        modalImg.alt = alt;
+                        bsModal.show();
+                    });
+                });
+            }
+
+            // Enable zoom for carousel and default image
+            enableClickZoom('#projectCarousel .carousel-item img');
+            enableClickZoom('.project-carousel-wrap > img');
+        });
+    </script>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-dark">
+                <div class="modal-body p-0">
+                    <img id="modalImage" src="" class="w-100" style="max-height: 85vh; object-fit: contain;" alt="">
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h1 class="mb-4">Tableau de Bord Administrateur</h1>
+
+    <div class="row">
+
+        <!-- CARD Utilisateurs -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">👤 Utilisateurs</h5>
+                    <p class="card-text text-muted">
+                        Gérer les comptes utilisateurs du site.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD Projets -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">📁 Projets</h5>
+                    <p class="card-text text-muted">
+                        Ajouter, modifier ou supprimer vos projets visibles sur le portfolio.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD Autres sections -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title">⚙️ Paramètres</h5>
+                    <p class="card-text text-muted">
+                        Gérer les paramètres généraux du site.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

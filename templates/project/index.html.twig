@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Projets - Portfolio{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: none;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-img {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .project-languages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .lang-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            background: #e0e7ff;
+            color: #4338ca;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Mes Projets</h1>
+        <p class="lead text-muted">Découvrez l'ensemble de mes réalisations et expérimentations</p>
+    </div>
+
+    {% if projets is empty %}
+        <div class="alert alert-info text-center">
+            <p class="mb-0">Aucun projet disponible pour le moment.</p>
+        </div>
+    {% else %}
+        <div class="row g-4">
+            {% for projet in projets %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card project-card shadow-sm">
+                        
+                        {# Image du projet #}
+                        {% set logo = projet.images|filter(img => img.name and img.name|lower == 'logo' and img.image)|first %}
+                        {% if logo is not null and logo.image is defined %}
+                            {% set ext = logo.image|split('.')|last|lower %}
+                            {% if ext in ['mp4','webm','ogg','ogv'] %}
+                                <img src="{{ asset('images/default.png') }}"
+                                     class="project-img"
+                                     alt="Image par défaut">
+                            {% else %}
+                                <img src="{{ asset('img/' ~ logo.image) }}"
+                                     class="project-img"
+                                     alt="{{ projet.name }}">
+                            {% endif %}
+                        {% else %}
+                            <img src="{{ asset('images/default.png') }}"
+                                 class="project-img"
+                                 alt="Image par défaut">
+                        {% endif %}
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold">{{ projet.name }}</h5>
+                            
+                            <p class="text-muted small mb-2">
+                                <i class="bi bi-calendar3"></i> {{ projet.createdAt|date('d/m/Y') }}
+                            </p>
+
+                            <p class="card-text text-secondary mb-3">
+                                {{ projet.description|length > 150 ? projet.description|slice(0, 150) ~ '...' : projet.description }}
+                            </p>
+
+                            {# Langages #}
+                            {% if projet.language is not empty %}
+                                <div class="project-languages">
+                                    {% for lang in projet.language %}
+                                        <span class="lang-badge">{{ lang.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="mt-auto pt-3">
+                                <a href="{{ path('projet_show', {id: projet.id}) }}" 
+                                   class="btn btn-primary w-100">
+                                    Voir le projet
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
