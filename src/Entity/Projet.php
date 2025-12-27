@@ -36,6 +36,9 @@ class Projet
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $lienGithub = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $file = null;
+
     public function __construct()
     {
         $this->Language = new ArrayCollection();
@@ -128,5 +131,17 @@ class Projet
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(string $file): static
+    {
+        $this->file = $file;
+
+        return $this;
     }
 }
