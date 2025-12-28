@@ -36,7 +36,7 @@ class Projet
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $lienGithub = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $file = null;
 
     public function __construct()
