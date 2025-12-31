@@ -120,6 +120,15 @@
                         </a>
                     {% endif %}
 
+                    {% if projet.file is not null and projet.file is not empty %}
+                        <hr class="my-4">
+                        <h5 class="mb-2">Fichier du projet</h5>
+                        {% set fileUrl = projet.file starts with 'http' ? projet.file : asset('uploads/projets/' ~ projet.file) %}
+                        <a href="{{ fileUrl }}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener noreferrer" download>
+                            <i class="bi bi-paperclip"></i> Télécharger
+                        </a>
+                    {% endif %}
+
                     <hr class="my-4">
                     <p class="text-muted mb-0">Créé le : {{ projet.createdAt|date('d/m/Y') }}</p>
                 </div>

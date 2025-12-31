@@ -32,6 +32,9 @@ services:
       - target: 443
         published: ${HTTP3_PORT:-443}
         protocol: udp
+    depends_on:
+      database:
+        condition: service_healthy
     networks:
        - portfolio-network
   # - orc_orc-network
