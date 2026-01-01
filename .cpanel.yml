@@ -1,0 +1,18 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/fizu3884/sitesProjets/ravignon-enzo.fr
+
+    - /usr/bin/rsync -a --delete
+      --exclude=".git/"
+      --exclude=".env"
+      --exclude=".env.local"
+      --exclude="var/"
+      --exclude="error_log"
+      --exclude="public/error_log"
+      --exclude="public/uploads/"
+      ./ $DEPLOYPATH/
+
+    - cd $DEPLOYPATH && composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader --no-scripts
+
+    - cd $DEPLOYPATH && APP_ENV=prod APP_DEBUG=0 php bin/console doctrine:migrations:migrate --no-interaction --env=prod
+    - cd $DEPLOYPATH && APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear --env=prod
