@@ -1,345 +1,432 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - Portfolio{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        /* Hero gradient title */
-        .hero-title {
-            background: linear-gradient(135deg, #00d4e8, #00b8d4, #0d3b66);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: -0.02em;
-        }
-
-        /* Hero profile image with glow */
-        .hero-profile-img {
-            position: relative;
-            display: inline-block;
-        }
-        .hero-profile-img::before {
-            content: '';
-            position: absolute;
-            inset: -12px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(0, 184, 212, 0.4), rgba(13, 59, 102, 0.3));
-            z-index: -1;
-            filter: blur(20px);
-        }
-        .hero-profile-img img {
-            position: relative;
-            z-index: 1;
-            border: 2px solid rgba(0, 184, 212, 0.3);
-        }
-
-        /* CTA Button */
-        .btn-cv {
-            background: linear-gradient(135deg, #00b8d4, #00d4e8);
-            color: #0a1423;
-            border: none;
-            font-weight: 700;
-            padding: 12px 28px;
-            border-radius: 10px;
-            transition: all 280ms cubic-bezier(0.4, 0.0, 0.2, 1);
-            box-shadow: 0 8px 24px rgba(0, 184, 212, 0.3);
-            letter-spacing: 0.5px;
-        }
-        .btn-cv:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 36px rgba(0, 184, 212, 0.4);
-            color: #0a1423;
-        }
-        .btn-cv:active {
-            transform: translateY(-1px);
-        }
-
-        /* Section headers accent */
-        .section-heading { display: inline-flex; align-items: center; gap: 10px; }
-        .section-heading::before {
-            content: '';
-            width: 42px;
-            height: 3px;
-            border-radius: 999px;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-        }
-
-        /* Project card enhanced */
-        .project-card {
-            transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #00b8d4, #0d3b66);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
-            z-index: 1;
-        }
-        .project-card:hover::before {
-            transform: scaleX(1);
-        }
-        .project-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 48px rgba(0, 184, 212, 0.2) !important;
-        }
-        .card-img-top {
-            transition: filter 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-        .project-card:hover .card-img-top {
-            filter: brightness(1.1) saturate(1.15);
-        }
-
-        /* Override skill cards to avoid white blocks */
-        .skill-card {
-            border: 1px solid rgba(255, 255, 255, .1);
-            border-radius: var(--radius);
-            padding: 18px 14px;
-            background: linear-gradient(150deg, #0f192f, #0c1528 70%);
-            box-shadow: var(--shadow);
-            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-            cursor: pointer;
-            height: 100%;
-        }
-        .skill-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
-            border-color: rgba(34, 211, 238, .35);
-        }
-        .skill-thumb {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 78px;
-            height: 78px;
-            border-radius: 12px;
-            background: rgba(4, 51, 130, .12);
-            border: 1px solid rgba(255, 255, 255, .08);
-            margin: 0 auto 12px;
-            overflow: hidden;
-        }
-        .skill-thumb img {
-            width: 64px;
-            height: 64px;
-            object-fit: contain;
-        }
-        .skill-name {
-            text-align: center;
-            font-weight: 700;
-            color: #f8fafc;
-            font-size: 1rem;
-            margin: 0;
-        }
-    </style>
-{% endblock %}
+{% block title %}Enzo Ravignon — Développeur Full-Stack{% endblock %}
 
 {% block body %}
 
-<section class="container my-5 py-5" data-reveal="up">
-    <div class="row align-items-center g-5">
+{# ============================================================
+   HERO
+   ============================================================ #}
+<section id="top" class="hero">
+    <div class="container hero-grid">
 
-        <div class="col-md-5 text-center">
-            <div class="hero-profile-img">
-                <img src="/images/enzo_pp.png" class="rounded-circle shadow" width="200" alt="Photo de profil">
+        <div class="hero-photo-wrap">
+            <svg class="rev-ring" viewBox="0 0 240 240" aria-hidden="true">
+                <circle class="track" cx="120" cy="120" r="110"/>
+                <circle class="arc"   cx="120" cy="120" r="110"/>
+            </svg>
+            <div class="hero-photo">
+                <img src="{{ asset('images/enzo_pp.png') }}" alt="Photo d'Enzo Ravignon">
             </div>
-            <h2 class="fw-bold mt-4 mb-3" style="color: #00d4e8;">Ravignon Enzo</h2>
-            <a href={{ asset('file/mon_cv.pdf') }} class="btn btn-cv">📥 Télécharger mon CV</a>
         </div>
 
-        <div class="col-md-7">
-            <h1 class="hero-title mb-4">Développeur Web<br>en Devenir</h1>
-            <p class="lead" style="color: #a5c8e1; line-height: 1.8;">
-                Passionné par le développement web, j'apprends chaque jour à concevoir des projets modernes,
-                performants et adaptés aux besoins réels. Actuellement en alternance chez <strong style="color: #00b8d4;">Dhygietal</strong>,
-                je développe mes compétences en <strong style="color: #00b8d4;">Full-Stack</strong> et j'explore les technologies web avancées.
+        <div class="hero-copy">
+            <span class="hello">
+                <span class="wave" aria-hidden="true">👋</span>
+                Salut, moi c'est Enzo
+            </span>
+            <h1>
+                Développeur web <span class="bold blue">full-stack</span>.<br>
+                Code <span class="bold">lisible</span>, sites <span class="bold">rapides</span>, projets <span class="bold">bien terminés</span>.
+            </h1>
+            <p class="lead">
+                Je suis en 3<sup>e</sup> année de BUT Informatique, en alternance chez <a href="#about">Dhygietal</a>. Je conçois et développe des applications web — du back-end Symfony aux interfaces React — avec une exigence simple&nbsp;: du code lisible, et des projets qui tiennent en production.
             </p>
-            <div class="mt-4 pt-2">
-                <span class="badge" style="background: rgba(0, 184, 212, 0.2); color: #00b8d4; border: 1px solid rgba(0, 184, 212, 0.4); font-size: 0.9rem; padding: 8px 14px; margin-right: 8px;">Full-Stack</span>
+            <div class="hero-ctas">
+                <a href="#projects" class="btn primary">
+                    Voir mes projets
+                    <span class="arr" aria-hidden="true">→</span>
+                </a>
+                <a href="{{ path('contact') }}" class="btn ghost">Me contacter</a>
+            </div>
+            <div class="hero-meta">
+                <span class="meta-chip"><span class="dot"></span>Disponible</span>
+                <span class="meta-chip"><span class="label">Base</span> Charleville-Mézières</span>
+                <span class="meta-chip"><span class="label">Statut</span> Alternance · 2024 — en cours</span>
             </div>
         </div>
 
     </div>
 </section>
 
+{# ============================================================
+   ABOUT
+   ============================================================ #}
+<section id="about" class="block">
+    <div class="container">
+        <div class="block-head">
+            <span class="eyebrow">À propos</span>
+            <h2>
+                <span class="light">Étudiant en informatique,</span><br>
+                développeur <span class="bold blue">en alternance</span>.
+            </h2>
+        </div>
 
-<section class="my-5" data-reveal="up">
-    <h2 class="mb-4 section-heading">Mes compétences</h2>
-
-    <div class="row g-4">
-        {% for language in languages %}
-            {% set imagePath = language.image ? asset(language.image) : asset('images/default.png') %}
-            <div class="col-6 col-md-4 col-lg-3" data-reveal="zoom">
-                <div class="skill-card text-center">
-                    <div class="skill-thumb">
-                        <img src="{{ imagePath }}" alt="{{ language.name }}">
-                    </div>
-                    <p class="skill-name">{{ language.name }}</p>
-                </div>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    J'ai toujours aimé les disciplines où la performance se joue dans les détails — un projet web n'est pas si différent. Entre une page lente et une page rapide, entre une fonctionnalité bancale et une fonctionnalité solide, il y a rarement un grand <em>saut de génie</em>&nbsp;: il y a surtout des dizaines de petites décisions prises avec attention.
+                </p>
+                <p>
+                    Je suis en troisième année de <strong>BUT Informatique</strong> et en parallèle je travaille en alternance chez <strong>Dhygietal</strong> — l'entreprise derrière Cocooncenter et Parapharmacie&nbsp;Lafayette. Je développe en <strong>PHP / Symfony</strong> côté serveur et en JavaScript côté navigateur, sur des sites e-commerce à fort trafic. C'est l'environnement où j'apprends le plus&nbsp;: du code lu par d'autres, de la prod réelle, des cas particuliers à comprendre, et l'obligation de tenir une <em>qualité constante</em>.
+                </p>
+                <p>
+                    Au-delà du code, j'aime les systèmes qui tournent — ceux où chaque pièce a une raison d'être, où l'on comprend l'enchaînement, où il n'y a pas de magie cachée. Mon approche s'inspire de cette idée&nbsp;: du code lisible, des conventions partagées, des décisions documentées.
+                </p>
+                <p>
+                    Je préfère un projet bien terminé à dix démarrés, et une fonctionnalité simple qui marche à une démo brillante qui craque sous la charge. Si tu veux discuter d'un projet, d'une opportunité ou simplement échanger — <a href="{{ path('contact') }}" style="color: var(--accent); border-bottom: 1px solid currentColor;">écris-moi</a>.
+                </p>
             </div>
-        {% else %}
-            <p class="text-muted">Aucune compétence enregistrée pour le moment.</p>
-        {% endfor %}
-    </div>
-</section>
 
-<section class="my-5" data-reveal="up">
-    <h2 class="mb-4 section-heading">Mes logiciels utilisés</h2>
-
-    <div class="row g-4">
-        {% for logiciel in logiciels %}
-            <div class="col-12 col-md-6 col-lg-4" data-reveal="zoom">
-                <div class="skill-card">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <h5 class="mb-0">{{ logiciel.name }}</h5>
+            <aside class="about-side">
+                <div class="pull-card">
+                    <span class="kicker">Approche</span>
+                    <p class="quote">
+                        «&nbsp;<em>Lisible avant rapide. Mais rapide quand même.</em>&nbsp;»
+                    </p>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="n">3<sup style="font-size:14px;font-weight:500;color:var(--ink-soft)">e</sup></div>
+                        <div class="l">année de BUT Informatique</div>
                     </div>
-                   <div class="skill-thumb">
-                        <img src="{{ logiciel.url }}" alt="{{ logiciel.name }}">
+                    <div class="stat">
+                        <div class="n">2<sup style="font-size:14px;font-weight:500;color:var(--ink-soft)">e</sup></div>
+                        <div class="l">année en alternance Full-Stack</div>
+                    </div>
+                    <div class="stat">
+                        <div class="n">+5</div>
+                        <div class="l">projets livrés en équipe</div>
+                    </div>
+                    <div class="stat">
+                        <div class="n">FR</div>
+                        <div class="l">Charleville-Mézières · Grand Est</div>
                     </div>
                 </div>
-            </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+{# ============================================================
+   PROJECTS
+   ============================================================ #}
+<section id="projects" class="block" style="background: var(--bg-soft);">
+    <div class="container">
+        <div class="block-head">
+            <span class="eyebrow">Sélection</span>
+            <h2>Une sélection de <span class="bold blue">projets récents</span>.</h2>
+            <p>De l'alternance aux projets d'école, en passant par les soirs un peu trop longs sur des projets personnels.</p>
+        </div>
+
+        {% if projets is empty %}
+            <p style="color: var(--ink-soft);">Aucun projet disponible pour le moment.</p>
         {% else %}
-            <p class="text-muted">Aucun logiciel enregistré pour le moment.</p>
-        {% endfor %}
-    </div>
-</section>
-
-<section class="my-5" data-reveal="up">
-    <h2 class="mb-3 section-heading">Mes Formations</h2>
-
-    <div class="card p-3 shadow-sm reveal" data-reveal="up">
-        <ul class="mb-0">
-            <li>
-                <strong>2023 – Actuellement :</strong> BUT Informatique (parcours développement)
-            </li>
-            <li>
-                <strong>2022 :</strong> Bac Général – spécialités NSI, Mathématiques, HGGSP
-            </li>
-        </ul>
-    </div>
-</section>
-
-<section class="my-5" data-reveal="up">
-    <h2 class="mb-3 section-heading">Mes Expériences</h2>
-
-    <div class="card p-3 shadow-sm reveal" data-reveal="up">
-        <ul class="mb-0">
-
-            <li class="mt-2">
-                <strong>Dhygietal :</strong> Alternance Développeur Full-Stack
-                <ul>
-                    <li>2025 – Actuellement, La Veuve</li>
-                    <li>Création d’API REST pour sites e-commerce</li>
-                    <li>Participation à un BFF (GraphQL, Apollo Server)</li>
-                    <li>Travail en équipe (Méthode Agile)</li>
-                </ul>
-            </li>
-
-            <li class="mt-3">
-                <strong>Ardenne Métropole :</strong> Stage Développeur Full-Stack (2ᵉ année)
-                <ul>
-                    <li>02/2025 – 04/2025, Charleville-Mézières</li>
-                    <li>Développement d’un site interne de demande de formation (Symfony)</li>
-                </ul>
-            </li>
-
-        </ul>
-    </div>
-</section>
-
-
-<section class="my-5" data-reveal="up">
-    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
-        <h2 class="section-heading mb-0">Mes Projets</h2>
-        <a class="btn btn-cv" href="{{ path('projet_index') }}">Voir tous les projets →</a>
-    </div>
-
-    <div class="row g-4">
-
-        {% for projet in projets %}
-            <div class="col-md-4 mb-2 reveal" data-reveal="up">
-                <a href="{{ path('projet_show', {id: projet.id}) }}" class="text-decoration-none">
-
-                   <div class="card shadow-sm h-100 project-card" style="border: 1px solid rgba(0, 184, 212, 0.15);"
-
-                        {# VÉRIFICATION : Est-ce que le projet a des images ? #}
-                        {% set logo = projet.images|filter(img => img.name and img.name|lower == 'logo' and img.image)|first %}
-                        {% if logo is not null and logo.image is defined %}
-                            {% set ext = logo.image|split('.')|last|lower %}
-                            {% if ext in ['mp4','webm','ogg','ogv'] %}
-                                <img src="{{ asset('images/default.png') }}"
-                                     class="card-img-top"
-                                     alt="Image par défaut"
-                                     style="height: 180px; object-fit: cover;">
-                            {% else %}
-                                <img src="{{ asset('img/' ~ logo.image) }}"
-                                     class="card-img-top"
-                                     alt="Image du projet {{ projet.name }}"
-                                     style="height: 180px; object-fit: cover;">
-                            {% endif %}
-                        {% else %}
-                            <img src="{{ asset('images/default.png') }}"
-                                 class="card-img-top"
-                                 alt="Image par défaut"
-                                 style="height: 180px; object-fit: cover;">
-                        {% endif %}
-
-
-                        <div class="card-body">
-                            <h5 class="card-title">{{ projet.name }}</h5>
-                            <p class="card-text text-muted">
-                                {{ projet.description|slice(0, 100) ~ '...' }}
-                            </p>
+            <div class="projects-grid">
+                {% for projet in projets|slice(0, 4) %}
+                    {% set logo = projet.images|filter(img => img.name and img.name|lower == 'logo' and img.image)|first %}
+                    {% if logo is not null and logo.image is defined %}
+                        {% set ext = logo.image|split('.')|last|lower %}
+                        {% set imgPath = ext in ['mp4','webm','ogg','ogv'] ? asset('images/default.png') : asset('img/' ~ logo.image) %}
+                    {% else %}
+                        {% set imgPath = asset('images/default.png') %}
+                    {% endif %}
+                    <article
+                        class="project-card"
+                        data-id="{{ projet.id }}"
+                        data-year="{{ projet.createdAt|date('Y') }}"
+                        data-title="{{ projet.name|e('html_attr') }}"
+                        data-desc="{{ projet.description|e('html_attr') }}"
+                        data-img="{{ imgPath }}"
+                        data-github="{{ projet.lienGithub ?? '' }}"
+                        data-url="{{ path('projet_show', {id: projet.id}) }}"
+                        data-stack="{{ projet.language|map(l => l.name)|join(', ')|e('html_attr') }}"
+                        tabindex="0"
+                        role="button"
+                        aria-label="Voir {{ projet.name }}"
+                    >
+                        <div class="pc-row">
+                            <span class="pc-badge">
+                                <span class="num">{{ '%02d'|format(loop.index) }}</span>
+                                {{ projet.createdAt|date('Y') }}
+                            </span>
+                            <span class="pc-arrow" aria-hidden="true">↗</span>
                         </div>
+                        <h3 class="pc-title">{{ projet.name }}</h3>
+                        <p class="pc-desc">{{ projet.description|slice(0, 140) }}{% if projet.description|length > 140 %}…{% endif %}</p>
+                        <div class="pc-tags">
+                            {% for lang in projet.language %}
+                                <span class="pill">{{ lang.name }}</span>
+                            {% endfor %}
+                            <span class="pill alt">{{ projet.createdAt|date('Y') }}</span>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
 
+            {% if projets|length > 4 %}
+                <div style="text-align: center; margin-top: 36px;">
+                    <a href="{{ path('projet_index') }}" class="btn ghost">
+                        Voir tous les projets
+                        <span class="arr" aria-hidden="true">→</span>
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</section>
+
+{# ============================================================
+   SKILLS
+   ============================================================ #}
+<section id="skills" class="block">
+    <div class="container">
+        <div class="block-head">
+            <span class="eyebrow">Stack</span>
+            <h2>Les outils que <span class="bold blue">j'utilise</span> au quotidien.</h2>
+            <p>En cours, en alternance et sur mes projets perso. Pas une liste exhaustive : ce sur quoi je suis vraiment à l'aise.</p>
+        </div>
+
+        <div class="skills-grid">
+            {% if languages is not empty %}
+                <div class="skill-card">
+                    <div class="skill-head">
+                        <span class="skill-name">Langages</span>
+                        <span class="skill-tag">Technologies</span>
                     </div>
+                    <div class="skill-pills">
+                        {% for lang in languages %}
+                            <span class="pill">{{ lang.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
 
+            {% if logiciels is defined and logiciels is not empty %}
+                <div class="skill-card">
+                    <div class="skill-head">
+                        <span class="skill-name">Outils</span>
+                        <span class="skill-tag">Workflow</span>
+                    </div>
+                    <div class="skill-pills">
+                        {% for logiciel in logiciels %}
+                            <span class="pill">{{ logiciel.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="skill-card">
+                <div class="skill-head">
+                    <span class="skill-name">Outillage</span>
+                    <span class="skill-tag">Dev &amp; Ops</span>
+                </div>
+                <div class="skill-pills">
+                    <span class="pill">Git / GitHub</span>
+                    <span class="pill">Docker</span>
+                    <span class="pill">Linux · Bash</span>
+                    <span class="pill">VS Code</span>
+                    <span class="pill">PhpStorm</span>
+                    <span class="pill">Figma</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ============================================================
+   PARCOURS
+   ============================================================ #}
+<section id="parcours" class="block">
+    <div class="container">
+        <div class="block-head">
+            <span class="eyebrow">Parcours</span>
+            <h2>Études et <span class="bold blue">expérience</span>.</h2>
+        </div>
+
+        <div class="timeline">
+            <div class="tl-card current">
+                <span class="tl-when"><span class="live"></span>2024 — en cours</span>
+                <div>
+                    <h3 class="tl-role">Développeur Full-Stack — alternance</h3>
+                    <div class="tl-org">Dhygietal · Cocooncenter &amp; Parapharmacie Lafayette</div>
+                    <p class="tl-desc">Développement de fonctionnalités sur un écosystème e-commerce à fort trafic. Stack PHP / Symfony / Doctrine, travail en équipe produit aux côtés du DSI.</p>
+                </div>
+            </div>
+
+            <div class="tl-card">
+                <span class="tl-when">02/2025 — 04/2025</span>
+                <div>
+                    <h3 class="tl-role">Développeur Full-Stack — stage</h3>
+                    <div class="tl-org">Ardenne Métropole · Charleville-Mézières</div>
+                    <p class="tl-desc">Développement d'un site interne de demande de formation avec Symfony. Conception de l'architecture, mise en place des formulaires et gestion des droits utilisateurs.</p>
+                </div>
+            </div>
+
+            <div class="tl-card">
+                <span class="tl-when">2023 — 2026</span>
+                <div>
+                    <h3 class="tl-role">BUT Informatique</h3>
+                    <div class="tl-org">IUT — parcours développement d'applications</div>
+                    <p class="tl-desc">Bachelor Universitaire de Technologie en 3 ans. Projets en équipe, méthodes agiles, fondamentaux du développement, bases de données, réseaux et architecture logicielle.</p>
+                </div>
+            </div>
+
+            <div class="tl-card">
+                <span class="tl-when">2022</span>
+                <div>
+                    <h3 class="tl-role">Baccalauréat général</h3>
+                    <div class="tl-org">Spécialités NSI, Mathématiques, HGGSP</div>
+                    <p class="tl-desc">Bac obtenu avec une orientation tournée vers l'informatique et le développement logiciel.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ============================================================
+   CONTACT
+   ============================================================ #}
+<section id="contact" class="block">
+    <div class="container">
+        <div class="contact-card">
+            <div>
+                <span class="eyebrow">Contact</span>
+                <h2>
+                    Une idée, un projet, une opportunité&nbsp;? <span class="blue">Écrivez-moi.</span>
+                </h2>
+                <p class="lead">
+                    Je réponds vite, en français. Le plus simple&nbsp;: un e-mail avec ce qui vous trotte dans la tête.
+                </p>
+                <a href="mailto:enzo.ravignon@gmail.com" class="contact-cta">
+                    enzo.ravignon@gmail.com
+                    <span aria-hidden="true">→</span>
                 </a>
             </div>
-        {% else %}
-            <p>Aucun projet pour le moment.</p>
-        {% endfor %}
-    </div>
-</section>
-
-<hr style="margin: 5rem 0;">
-
-<section class="my-5 py-5" data-reveal="up">
-
-    <div class="row justify-content-center">
-        <div class="col-md-6 text-center" data-reveal="zoom">
-            <p class="mb-4" style="color: #a5c8e1; font-size: 1.1rem;">
-                 Contactez-moi directement via le formulaire
-            </p>
-            <a href="{{ path('contact') }}" class="btn btn-cv" style="padding: 14px 40px; font-size: 1.05rem;">
-                Accéder au formulaire de contact
-            </a>
-        </div>
-    </div>
-
-    <div class="row g-3 mt-5 justify-content-center">
-        <div class="col-md-4 text-center" data-reveal="zoom">
-            <a href="https://www.linkedin.com/in/enzo-ravignon-7678a5246/" class="text-decoration-none" style="display: block; padding: 20px; background: rgba(0, 184, 212, 0.1); border: 1px solid rgba(0, 184, 212, 0.2); border-radius: 12px; transition: all 280ms cubic-bezier(0.4, 0.0, 0.2, 1);">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;"><img src="{{ asset('images/li.png') }}" alt="LinkedIn" style="width: 60px; height: 60px; object-fit: contain;"></div>
-                <div style="color: #00b8d4; font-weight: 700;">LinkedIn</div>
-            </a>
-        </div>
-        <div class="col-md-4 text-center" data-reveal="zoom">
-            <a href="https://github.com/Enzorvg" class="text-decoration-none" style="display: block; padding: 20px; background: rgba(0, 184, 212, 0.1); border: 1px solid rgba(0, 184, 212, 0.2); border-radius: 12px; transition: all 280ms cubic-bezier(0.4, 0.0, 0.2, 1);">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;"><img src="{{ asset('images/github.png') }}" alt="GitHub" style="width: 60px; height: 60px; object-fit: contain;"></div>
-                <div style="color: #00b8d4; font-weight: 700;">GitHub</div>
-            </a>
+            <div class="contact-side">
+                <a href="mailto:enzo.ravignon@gmail.com" class="contact-link">
+                    <span class="k">Email</span>
+                    <span class="v">enzo.ravignon@gmail.com →</span>
+                </a>
+                <a href="https://www.linkedin.com/in/enzo-ravignon-7678a5246/" target="_blank" rel="noreferrer" class="contact-link">
+                    <span class="k">LinkedIn</span>
+                    <span class="v">/in/enzo-ravignon ↗</span>
+                </a>
+                <a href="https://github.com/Enzorvg" target="_blank" rel="noreferrer" class="contact-link">
+                    <span class="k">GitHub</span>
+                    <span class="v">/Enzorvg ↗</span>
+                </a>
+                <div class="contact-link" style="cursor: default;">
+                    <span class="k">Localisation</span>
+                    <span class="v">Charleville-Mézières, FR</span>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
+{# ============================================================
+   PANEL slide-in projet
+   ============================================================ #}
+<div class="panel-mask" id="panelMask"></div>
+<aside class="panel" id="projectPanel" aria-hidden="true">
+    <div class="panel-head">
+        <span class="panel-tag" id="panelYear"></span>
+        <button class="panel-close" id="panelClose" aria-label="Fermer">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <path d="M3 3l8 8M11 3l-8 8"/>
+            </svg>
+        </button>
+    </div>
+    <div class="panel-body">
+        <h3 id="panelTitle"></h3>
+        <div class="sub" id="panelSub">Projet</div>
+        <div class="panel-thumb" id="panelThumb">
+            <img id="panelImg" src="" alt="">
+        </div>
+        <p id="panelDesc"></p>
+        <div class="panel-section" id="panelStackSection">
+            <h4>Stack</h4>
+            <div class="panel-pills" id="panelStack"></div>
+        </div>
+        <div id="panelGithubWrap" style="margin-top: 20px; display: none;">
+            <a id="panelGithub" href="#" target="_blank" rel="noreferrer" class="github-link">
+                Voir sur GitHub ↗
+            </a>
+        </div>
+        <div style="margin-top: 28px;">
+            <a id="panelDetailLink" href="#" class="btn primary">
+                Voir le projet complet
+                <span class="arr" aria-hidden="true">→</span>
+            </a>
+        </div>
+    </div>
+</aside>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+(function () {
+    var mask = document.getElementById('panelMask');
+    var panel = document.getElementById('projectPanel');
+    var closeBtn = document.getElementById('panelClose');
+
+    function openPanel(card) {
+        document.getElementById('panelYear').textContent = card.dataset.year || '';
+        document.getElementById('panelTitle').textContent = card.dataset.title || '';
+        document.getElementById('panelDesc').textContent = card.dataset.desc || '';
+
+        var img = document.getElementById('panelImg');
+        img.src = card.dataset.img || '';
+        img.alt = card.dataset.title || '';
+
+        var stackEl = document.getElementById('panelStack');
+        stackEl.innerHTML = '';
+        if (card.dataset.stack) {
+            card.dataset.stack.split(', ').filter(Boolean).forEach(function (s) {
+                var sp = document.createElement('span');
+                sp.className = 'pill';
+                sp.textContent = s;
+                stackEl.appendChild(sp);
+            });
+        }
+
+        var ghWrap = document.getElementById('panelGithubWrap');
+        if (card.dataset.github) {
+            document.getElementById('panelGithub').href = card.dataset.github;
+            ghWrap.style.display = 'block';
+        } else {
+            ghWrap.style.display = 'none';
+        }
+
+        document.getElementById('panelDetailLink').href = card.dataset.url || '#';
+
+        mask.classList.add('open');
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePanel() {
+        mask.classList.remove('open');
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.project-card[data-id]').forEach(function (card) {
+        card.addEventListener('click', function () { openPanel(card); });
+        card.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPanel(card); }
+        });
+    });
+
+    mask.addEventListener('click', closePanel);
+    closeBtn.addEventListener('click', closePanel);
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { closePanel(); }
+    });
+})();
+</script>
 {% endblock %}
