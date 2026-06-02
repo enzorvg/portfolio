@@ -194,9 +194,13 @@
                         <span class="skill-name">Langages</span>
                         <span class="skill-tag">Technologies</span>
                     </div>
-                    <div class="skill-pills">
+                    <div class="skill-icons">
                         {% for lang in languages %}
-                            <span class="pill">{{ lang.name }}</span>
+                            {% set imagePath = lang.image ? asset(lang.image) : asset('images/default.png') %}
+                            <div class="skill-icon-item">
+                                <img src="{{ imagePath }}" alt="{{ lang.name }}">
+                                <span>{{ lang.name }}</span>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -208,9 +212,12 @@
                         <span class="skill-name">Outils</span>
                         <span class="skill-tag">Workflow</span>
                     </div>
-                    <div class="skill-pills">
+                    <div class="skill-icons">
                         {% for logiciel in logiciels %}
-                            <span class="pill">{{ logiciel.name }}</span>
+                            <div class="skill-icon-item">
+                                <img src="{{ logiciel.url }}" alt="{{ logiciel.name }}">
+                                <span>{{ logiciel.name }}</span>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>

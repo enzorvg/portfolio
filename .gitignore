@@ -58,6 +58,10 @@ DATA_SQL.sql
 !/public/uploads/.gitkeep
 ###< Uploads ###
 
+###> Webhook (secret hardcodé sur le serveur, jamais dans git) ###
+/public/webhook.php
+###< Webhook ###
+
 ###> Cache ###
 .php_cs.cache
 .phpunit.cache
