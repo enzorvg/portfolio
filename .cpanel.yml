@@ -13,6 +13,7 @@ deployment:
       --exclude='error_log'
       --exclude='public/error_log'
       --exclude='public/uploads/'
+      --exclude='public/img/'
       ./ "$DEPLOYPATH"/
 
     - chmod 711 "$DEPLOYPATH"
